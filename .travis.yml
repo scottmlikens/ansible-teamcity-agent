@@ -6,15 +6,8 @@ python: "2.6"
 sudo: required
 dist: 'centos/6'
 
-# Install pip
-addons:
-  apt:
-    packages:
-    - python-pip
-
 install:
-  # Install ansible
-  - pip2 install ansible
+  - yum -y install python-pip nginx ansible
 
   # Check ansible version
   - ansible --version
