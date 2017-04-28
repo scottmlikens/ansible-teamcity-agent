@@ -1,10 +1,10 @@
 TeamCity Agent
 =========
 
-[![Build Status](https://travis-ci.org/matisku/ansible-teamcity-agent.svg?branch=master)](https://travis-ci.org/matisku/ansible-teamcity-agent)
+[![Build Status](https://api.travis-ci.org/ekapusta/ansible-teamcity-agent.svg?branch=master)](https://travis-ci.org/ekapusta/ansible-teamcity-agent)
 
 This role will install and configure TeamCity Agent for TeamCity Server - CI tool from Jetbrains.
-Feel free to use it along with my TeamCity Server role - [matisku.teamcity-server](https://github.com/matisku/ansible-teamcity-server).
+Feel free to use it along with my TeamCity Server role - [matisku.teamcity-server](https://github.com/ekapusta/ansible-teamcity-server).
 
 ## Requirements
 1. `teamcity-server` - TeamCity Server
