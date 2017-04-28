@@ -1,0 +1,57 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          teamcity-agent
+# Required-Start:    $local_fs $remote_fs $syslog $network
+# Required-Stop:     $local_fs $remote_fs $syslog $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: TeamCity Build Agent
+# Description:       TeamCity Build Agent
+### END INIT INFO
+
+. /etc/rc.d/init.d/functions
+
+PATH=/sbin:/bin:/usr/bin
+USER={{ teamcity_server_user_name }}
+SCRIPT={{ teamcity_agent_install_dir }}/bin/agent.sh
+NAME=teamcity-agent
+PIDFILE={{ teamcity_agent_install_dir }}/logs/buildAgent.pid
+
+#. /lib/init/vars.sh
+#. /lib/lsb/init-functions
+
+rh_status() {
+    status -p $PIDFILE $NAME
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
+
+case "$1" in
+    start)
+        sudo -H -u $USER /bin/bash --login -c "$SCRIPT start"
+        ;;
+    stop)
+        sudo -H -u $USER /bin/bash --login -c "$SCRIPT stop"
+        ;;
+    force-reload)
+        sudo -H -u $USER /bin/bash --login -c "$SCRIPT stop"
+        sleep 2
+        sudo -H -u $USER /bin/bash --login -c "$SCRIPT start"
+        ;;
+    restart)
+        sudo -H -u $USER /bin/bash --login -c "$SCRIPT stop"
+        sleep 2
+        sudo -H -u $USER /bin/bash --login -c "$SCRIPT start"
+        ;;
+    status)
+        rh_status
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|force-reload|status}"
+        exit 1
+        ;;
+esac
+
+exit 0

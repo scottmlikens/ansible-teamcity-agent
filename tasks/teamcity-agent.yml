@@ -2,7 +2,7 @@
 - name: "Download Agent Package"
   get_url:
     url: "http://{{ teamcity_agent_server_url }}:{{ teamcity_agent_server_port }}/update/buildAgent.zip"
-    dest: /tmp
+    dest: /tmp/buildAgent.zip
     validate_certs: no
     timeout: 60
   register: _teamcity_agent_package
@@ -11,9 +11,9 @@
   yum:
     name: "{{ item }}"
     state: present
-    update_cache: yes
   with_items:
        - zip
+       - sudo
 
 - name: "Create Agent Build dir"
   file:
@@ -29,7 +29,7 @@
     dest: "{{ teamcity_agent_install_dir }}"
     owner: "{{ teamcity_agent_user }}"
     group: "{{ teamcity_agent_group }}"
-    copy: "no"
+    copy: "yes"
   when: _teamcity_agent_package|changed
 
 - name: "Add TeamCity Agent service default config"
@@ -38,12 +38,8 @@
     dest: "/etc/default/teamcity-agent"
     mode: 0644
 
-- name: "Put TeamCity Agent service file (sysv)"
-  template:
-    src: "teamcity-agent.conf.j2"
-    dest: "/etc/init/teamcity-agent.conf"
-    mode: 0644
-  when: "ansible_service_mgr != 'systemd'"
+- name: Add openvpn_ekapusta init.d daemon script
+  template: src=templates/init.j2 dest=/etc/init.d/teamcity-agent mode=0751
 
 - name: "Put TeamCity Agent service file (systemd)"
   template:
@@ -81,8 +77,12 @@
     group: "{{ teamcity_agent_group }}"
     mode: 0755
 
-- name: "Ensure TeamCity Agent is running"
-  service:
-    name: teamcity-agent
-    state: started
-    enabled: yes
+- name: "Chmod for agent.sh"
+  file:
+    path: /opt/buildAgent/bin/agent.sh
+    owner: "{{ teamcity_agent_user }}"
+    group: "{{ teamcity_agent_group }}"
+    mode: 0755
+
+- name: Ensure TeamCity Agent is running
+  action: service name=teamcity-agent state=started

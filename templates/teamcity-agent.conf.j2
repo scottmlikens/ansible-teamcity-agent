@@ -13,7 +13,7 @@ setgid teamcity
 
 pre-stop script
 
-  exec "${TEAMCITY_AGENT_PATH}/bin/agent.sh" stop
+  exec "{{ teamcity_agent_install_dir }}/bin/agent.sh" stop
 
 end script
 
@@ -24,15 +24,15 @@ pre-start script
   . /etc/default/teamcity-agent
 
   [ "$TEAMCITY_AGENT_ENABLED" != "yes" ] && { stop; exit 0; }
-  
-  exit 0 
+
+  exit 0
 end script
 
 script
   . /etc/default/teamcity-agent
 
-  exec "${TEAMCITY_AGENT_PATH}/bin/agent.sh" run
-  
+  exec "{{ teamcity_agent_install_dir }}/bin/agent.sh" run
+
 end script
 
 post-start script
