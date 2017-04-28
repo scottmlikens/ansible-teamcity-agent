@@ -11,7 +11,7 @@ serverUrl=http://{{ teamcity_agent_server_url }}:{{ teamcity_agent_server_port }
 ## The unique name of the agent used to identify this agent on the TeamCity server
 ## Use blank name to let server generate it.
 ## By default, this name would be created from the build agent's host name
-name={{ teamcity_agent_hostname }}
+name={{ ansible_hostname }}
 
 ## Container directory to create default checkout directories for the build configurations.
 ## TeamCity agent assumes ownership of the directory and will delete unknown directories inside.
@@ -33,6 +33,17 @@ systemDir=../system
 ## A token which is used to identify this agent on the TeamCity server for agent authorization purposes.
 ## It is automatically generated and saved back on the first agent connection to the server.
 authorizationToken=
+
+## The IP address which will be used by TeamCity server to connect to the build agent.
+## If not specified, it is detected by build agent automatically,
+## but if the machine has several network interfaces, automatic detection may fail.
+ownAddress={{ teamcity_agent_address }}
+
+## Optional
+## A port that TeamCity server will use to connect to the agent.
+## Please make sure that incoming connections for this port
+## are allowed on the agent computer (e.g. not blocked by a firewall)
+ownPort={{ teamcity_agent_port }}
 
 
 ######################################
