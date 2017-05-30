@@ -52,6 +52,7 @@
 - name: "Save agent auth token"
   shell: "grep authorizationToken {{ teamcity_agent_install_dir }}/conf/buildAgent.properties | sed 's/authorizationToken=//g'"
   changed_when: no
+  always_run: yes
   register: _teamcity_agent_token
 
 - name: "Create conf dir"
