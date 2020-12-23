@@ -61,3 +61,7 @@ ownPort={{ teamcity_agent_port }}
 # Environment Variables
 
 #env.exampleEnvVar=example Env Value
+
+{% for item in teamcity_agent_env_vars|dict2items %}
+env.{{ item.key }} = {{ item.value }}
+{% endfor %}
