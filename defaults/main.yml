@@ -9,4 +9,4 @@ teamcity_server_user_passwd: teamcity
 teamcity_agent_address: localhost
 teamcity_agent_port: 9090
 
-teamcity_agent_env_vars: []
+teamcity_agent_env_vars: {}
