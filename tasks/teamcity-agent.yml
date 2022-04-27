@@ -8,7 +8,7 @@
   register: _teamcity_agent_package
 
 - name: "Install dependencies"
-  yum:
+  apt:
     name: "{{ item }}"
     state: present
   with_items:
@@ -31,16 +31,12 @@
     owner: "{{ teamcity_agent_user }}"
     group: "{{ teamcity_agent_group }}"
     copy: "no"
-  when: _teamcity_agent_package|changed
 
 - name: "Add TeamCity Agent service default config"
   template:
     src: "teamcity-agent.j2"
     dest: "/etc/default/teamcity-agent"
     mode: 0644
-
-- name: Add openvpn_ekapusta init.d daemon script
-  template: src=templates/init.j2 dest=/etc/init.d/teamcity-agent mode=0751
 
 - name: "Put TeamCity Agent service file (systemd)"
   template:

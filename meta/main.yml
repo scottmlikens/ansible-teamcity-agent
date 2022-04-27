@@ -1,6 +1,8 @@
 ---
 galaxy_info:
   author: Mateusz Trojak
+  role_name: teamcity_agent
+  namespace: scottmlikens
   description: Installs and automatically configure TeamCity Agent.
   license: MIT
   min_ansible_version: 2.0.0

@@ -9,7 +9,6 @@
   user:
     name: "{{ teamcity_agent_user }}"
     group: "{{ teamcity_agent_group }}"
-    groups: nginx
     state: present
     shell: /bin/zsh
     createhome: yes
