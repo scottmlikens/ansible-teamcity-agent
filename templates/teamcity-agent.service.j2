@@ -4,7 +4,7 @@ Description="TeamCity Agent"
 
 [Service]
 User={{ teamcity_server_user_name }}
-ExecStart={{ teamcity_agent_install_dir }}/bin/agent.sh run
+ExecStart=docker run --privileged  -i -e SERVER_URL="https://{{ teamcity_agent_server_url }}" -e DOCKER_IN_DOCKER="start" -v /root/teamcity-agent/conf:/data/teamcity_agent/conf {{ teamcity_agent_docker_image }}
 
 [Install]
 WantedBy=multi-user.target

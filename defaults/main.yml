@@ -2,7 +2,7 @@
 teamcity_agent_server_url: unset
 teamcity_agent_server_port: 443
 teamcity_agent_install_dir: /opt/buildAgent
-
+teamcity_agent_docker_image: jetbrains/teamcity-agent:2021.2.3-linux-sudo
 teamcity_server_user_name: teamcity
 teamcity_server_user_passwd: teamcity
 
